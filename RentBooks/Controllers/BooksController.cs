@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using System.Web.Mvc;
 using RentBooks.Models;
 using RentBooks.ViewModels;
@@ -7,21 +9,36 @@ namespace RentBooks.Controllers
 {
     public class BooksController : Controller
     {
+        private ApplicationDbContext _context;
+
+        //intialize db in a constructor
+        public BooksController()
+        {
+            _context = new ApplicationDbContext();
+        }
+        //dispose this object
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+        }
+
         public ViewResult Index()
         {
-            var books = GetBooks();
+            var books = _context.Books.Include(c => c.Genre).ToList();
 
             return View(books);
         }
-
-        private IEnumerable<Book> GetBooks()
+        public ActionResult Details(int id)
         {
-            return new List<Book>
-            {
-                new Book { Id = 1, Name = "La rasarit de Eden" },
-                new Book { Id = 2, Name = "Matilda" }
-            };
+            var books = _context.Books.Include(m => m.Genre).SingleOrDefault(m => m.Id == id);
+
+            if (books == null)
+                return HttpNotFound();
+
+            return View(books);
+
         }
+
         // GET: Books/Random
         public ActionResult Random()
         {
