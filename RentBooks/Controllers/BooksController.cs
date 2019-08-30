@@ -21,6 +21,16 @@ namespace RentBooks.Controllers
         {
             _context.Dispose();
         }
+        public ActionResult BookForm()
+        {
+            var genre = _context.Genre.ToList();
+            var viewModel = new BookFormViewModel
+            {
+                Genre = genre
+            };
+
+            return View(viewModel);
+        }
 
         public ViewResult Index()
         {
@@ -37,6 +47,42 @@ namespace RentBooks.Controllers
 
             return View(books);
 
+        }
+        [HttpPost]
+        public ActionResult Save(Book book)
+        {
+            if (book.Id == 0)
+                _context.Books.Add(book);
+            else
+            {
+                var bookInDb = _context.Books.Single(c => c.Id == book.Id);
+
+                //Mapper.Map(customer, customerInDb);
+                //it should be used with a partial class of Customer
+
+                bookInDb.Name = book.Name;
+                bookInDb.ReleaseDate = book.ReleaseDate;
+                bookInDb.DateAdded = book.DateAdded;
+                bookInDb.GenreId = book.GenreId;
+                bookInDb.NumberInStock = book.NumberInStock;
+            }
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Books");
+        }
+        public ActionResult Edit(int id)
+        {
+            var book = _context.Books.SingleOrDefault(c => c.Id == id);
+            if (book == null)
+                return HttpNotFound();
+
+            var viewModel = new BookFormViewModel
+            {
+                Book = book,
+                Genre = _context.Genre.ToList()
+            };
+
+            return View("BookForm", viewModel);
         }
 
         // GET: Books/Random

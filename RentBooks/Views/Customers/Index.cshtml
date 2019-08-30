@@ -16,6 +16,9 @@
 }
 
 <h2>Customers</h2>
+
+@Html.ActionLink("Create New", "CustomerForm", "Customers", new { @class = "btn btn-primary"})
+
 @if (!Model.Any())
 {
     <p>We don't have any customers yet.</p>
@@ -33,7 +36,7 @@ else
             @foreach (var customer in Model)
             {
                 <tr>
-                    <td>@Html.ActionLink(customer.Name, "Random", "Customers", new { id = customer.Id }, null)</td>
+                    <td>@Html.ActionLink(customer.Name, "Edit", "Customers", new { id = customer.Id }, null)</td>
                     <td>@customer.MembershipType.Name</td>
                 </tr>
             }
