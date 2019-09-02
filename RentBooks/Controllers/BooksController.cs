@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
@@ -21,6 +22,12 @@ namespace RentBooks.Controllers
         {
             _context.Dispose();
         }
+        public ViewResult Index()
+        {
+            var books = _context.Books.Include(c => c.Genre).ToList();
+
+            return View(books);
+        }
         public ActionResult BookForm()
         {
             var genre = _context.Genre.ToList();
@@ -28,16 +35,22 @@ namespace RentBooks.Controllers
             {
                 Genre = genre
             };
-
-            return View(viewModel);
+            return View("BookForm", viewModel);
         }
-
-        public ViewResult Index()
+        public ActionResult Edit(int id)
         {
-            var books = _context.Books.Include(c => c.Genre).ToList();
+            var book = _context.Books.SingleOrDefault(c => c.Id == id);
+            if (book == null)
+                return HttpNotFound();
 
-            return View(books);
+            var viewModel = new BookFormViewModel(book)
+            {
+                Genre = _context.Genre.ToList()
+            };
+
+            return View("BookForm", viewModel);
         }
+
         public ActionResult Details(int id)
         {
             var books = _context.Books.Include(m => m.Genre).SingleOrDefault(m => m.Id == id);
@@ -48,43 +61,6 @@ namespace RentBooks.Controllers
             return View(books);
 
         }
-        [HttpPost]
-        public ActionResult Save(Book book)
-        {
-            if (book.Id == 0)
-                _context.Books.Add(book);
-            else
-            {
-                var bookInDb = _context.Books.Single(c => c.Id == book.Id);
-
-                //Mapper.Map(customer, customerInDb);
-                //it should be used with a partial class of Customer
-
-                bookInDb.Name = book.Name;
-                bookInDb.ReleaseDate = book.ReleaseDate;
-                bookInDb.DateAdded = book.DateAdded;
-                bookInDb.GenreId = book.GenreId;
-                bookInDb.NumberInStock = book.NumberInStock;
-            }
-            _context.SaveChanges();
-
-            return RedirectToAction("Index", "Books");
-        }
-        public ActionResult Edit(int id)
-        {
-            var book = _context.Books.SingleOrDefault(c => c.Id == id);
-            if (book == null)
-                return HttpNotFound();
-
-            var viewModel = new BookFormViewModel
-            {
-                Book = book,
-                Genre = _context.Genre.ToList()
-            };
-
-            return View("BookForm", viewModel);
-        }
-
         // GET: Books/Random
         public ActionResult Random()
         {
@@ -103,5 +79,42 @@ namespace RentBooks.Controllers
 
             return View(viewModel);
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Save(Book book)
+        {
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new BookFormViewModel(book)
+                {
+                    Genre = _context.Genre.ToList()
+                };
+                return View("BookForm", viewModel);
+            }
+
+            if (book.Id == 0)
+            {
+                if (book.ReleaseDate == DateTime.MinValue) book.ReleaseDate = DateTime.Now;
+                book.DateAdded = DateTime.Now;
+                _context.Books.Add(book);
+            }
+            else
+            {
+                var bookInDb = _context.Books.Single(c => c.Id == book.Id);
+
+                //Mapper.Map(customer, customerInDb);
+                //it should be used with a partial class of Customer
+
+                bookInDb.Name = book.Name;
+                bookInDb.ReleaseDate = book.ReleaseDate;
+                bookInDb.DateAdded = book.DateAdded;
+                bookInDb.GenreId = book.GenreId;
+                bookInDb.NumberInStock = book.NumberInStock;
+            }
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Books");
+        }
+
     }
 }
