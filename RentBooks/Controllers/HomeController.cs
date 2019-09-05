@@ -1,17 +1,28 @@
-﻿using System;
+﻿using RentBooks.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace RentBooks.Controllers
 {
     [AllowAnonymous]
     public class HomeController : Controller
     {
+        private ApplicationDbContext _context;
+
+        public HomeController()
+        {
+            _context = new ApplicationDbContext();
+        }
+        
         public ActionResult Index()
         {
-            return View();
+            var books = _context.Rentals.Include(c => c.Customer).Include(b => b.Book);
+
+            return View(books);
         }
 
         public ActionResult About()
