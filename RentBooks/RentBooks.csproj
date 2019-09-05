@@ -303,6 +303,10 @@
     <Compile Include="Migrations\201909041448288_NumberAvBooks.Designer.cs">
       <DependentUpon>201909041448288_NumberAvBooks.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909051802557_AddAuthorToBooks.cs" />
+    <Compile Include="Migrations\201909051802557_AddAuthorToBooks.Designer.cs">
+      <DependentUpon>201909051802557_AddAuthorToBooks.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Book.cs" />
@@ -768,6 +772,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909041448288_NumberAvBooks.resx">
       <DependentUpon>201909041448288_NumberAvBooks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909051802557_AddAuthorToBooks.resx">
+      <DependentUpon>201909051802557_AddAuthorToBooks.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -20,19 +20,6 @@ namespace RentBooks.Controllers.Api
             _context = new ApplicationDbContext();
         }
         //GET /api/books
-        //public IEnumerable<BookDto> GetBooks(string query = null)
-        //{
-        //    var booksQuery = _context.Books
-        //        .Include(m => m.Genre)
-        //        .Where(m => m.NumberAvailable > 0);
-
-        //    if (!String.IsNullOrWhiteSpace(query))
-        //        booksQuery = booksQuery.Where(m => m.Name.Contains(query));
-
-        //    return booksQuery
-        //        .ToList()
-        //        .Select(Mapper.Map<Book, BookDto>);
-        //}
         public IEnumerable<BookDto> GetBooks(string query = "")
         {
             var booksQuery = _context.Books.Include(m => m.Genre);

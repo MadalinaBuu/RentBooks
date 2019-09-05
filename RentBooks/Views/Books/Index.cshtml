@@ -2,7 +2,6 @@
 
 @{
     ViewBag.Title = "Books";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Books</h2>
@@ -12,22 +11,13 @@
 <table id="books" class="table table-bordered table-hover">
     <thead>
         <tr>
-            <th>Books</th>
+            <th>Book</th>
+            <th>Author</th>
             <th>Genre</th>
             <th>Delete</th>
         </tr>
     </thead>
     <tbody>
-        @*@foreach (var book in Model)
-        {
-            <tr>
-                <td>@Html.ActionLink(book.Name, "Edit", "Books", new { id = book.Id }, null)</td>
-                @if (book.Genre != null)
-                {
-                    <td>@book.Genre.Name</td>
-                }
-            </tr>
-        }*@
     </tbody>
 </table>
 
@@ -46,6 +36,9 @@
                         render: function (data, type, book) {
                             return "<a href='/books/edit/" + book.id + "'>" + book.name + "</a>";
                         }
+                    },
+                    {
+                        data: "author"
                     },
                     {
                         data: "genre.name"

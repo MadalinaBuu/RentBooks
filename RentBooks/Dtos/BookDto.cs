@@ -12,6 +12,10 @@ namespace RentBooks.Dtos
         public string Name { get; set; }
 
         [Required]
+        [StringLength(255)]
+        public string Author { get; set; }
+
+        [Required]
         public int GenreId { get; set; }
 
         public BookGenreDto Genre { get; set; }

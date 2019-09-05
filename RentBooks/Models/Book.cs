@@ -11,6 +11,10 @@ namespace RentBooks.Models
         [StringLength(255)]
         public string Name { get; set; }
 
+        [Required]
+        [StringLength(255)]
+        public string Author { get; set; }
+
         public BookGenre Genre { get; set; }
 
         [Required]
