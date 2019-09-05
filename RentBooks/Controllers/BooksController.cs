@@ -24,10 +24,12 @@ namespace RentBooks.Controllers
         }
         public ViewResult Index()
         {
-            var books = _context.Books.Include(c => c.Genre).ToList();
+            if (User.IsInRole(RoleName.CanManageBooks))
+                return View("Index");
 
-            return View(books);
+            return View("ReadOnlyList");
         }
+        [Authorize(Roles = RoleName.CanManageBooks)]
         public ActionResult BookForm()
         {
             var genre = _context.Genre.ToList();
@@ -37,6 +39,7 @@ namespace RentBooks.Controllers
             };
             return View("BookForm", viewModel);
         }
+        [Authorize(Roles = RoleName.CanManageBooks)]
         public ActionResult Edit(int id)
         {
             var book = _context.Books.SingleOrDefault(c => c.Id == id);
@@ -50,7 +53,6 @@ namespace RentBooks.Controllers
 
             return View("BookForm", viewModel);
         }
-
         public ActionResult Details(int id)
         {
             var books = _context.Books.Include(m => m.Genre).SingleOrDefault(m => m.Id == id);
@@ -79,6 +81,7 @@ namespace RentBooks.Controllers
 
             return View(viewModel);
         }
+        [Authorize(Roles = RoleName.CanManageBooks)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Save(Book book)
@@ -106,8 +109,8 @@ namespace RentBooks.Controllers
                 //it should be used with a partial class of Customer
 
                 bookInDb.Name = book.Name;
-                bookInDb.ReleaseDate = book.ReleaseDate;
-                bookInDb.DateAdded = book.DateAdded;
+                if (book.ReleaseDate == DateTime.MinValue) book.ReleaseDate = DateTime.Now;
+                if (book.DateAdded == DateTime.MinValue) bookInDb.DateAdded = DateTime.Now;
                 bookInDb.GenreId = book.GenreId;
                 bookInDb.NumberInStock = book.NumberInStock;
             }

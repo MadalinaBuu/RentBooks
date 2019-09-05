@@ -12,6 +12,7 @@ namespace RentBooks.App_Start
             Mapper.CreateMap<Customer, CustomerDto>();
             Mapper.CreateMap<Book, BookDto>();
             Mapper.CreateMap<MembershipType, MembershipTypeDto>();
+            Mapper.CreateMap<BookGenre, BookGenreDto>();
 
             //Dto to Domain
             Mapper.CreateMap<CustomerDto, Customer>()

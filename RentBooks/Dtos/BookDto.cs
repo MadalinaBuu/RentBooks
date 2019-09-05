@@ -14,6 +14,8 @@ namespace RentBooks.Dtos
         [Required]
         public int GenreId { get; set; }
 
+        public BookGenreDto Genre { get; set; }
+
         public DateTime ReleaseDate { get; set; }
 
         public DateTime DateAdded { get; set; }

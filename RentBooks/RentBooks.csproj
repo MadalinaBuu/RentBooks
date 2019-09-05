@@ -19,7 +19,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44343</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -49,6 +49,21 @@
   <ItemGroup>
     <Reference Include="AutoMapper, Version=4.1.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.4.1.0\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Ado, Version=1.7.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Glimpse.Ado.1.7.3\lib\net45\Glimpse.Ado.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.AspNet, Version=1.8.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Glimpse.AspNet.1.8.0\lib\net45\Glimpse.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Core, Version=1.8.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Glimpse.1.8.6\lib\net45\Glimpse.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.EF6, Version=1.6.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Glimpse.EF6.1.6.5\lib\net45\Glimpse.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Mvc5, Version=1.5.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Glimpse.Mvc5.1.5.3\lib\net45\Glimpse.Mvc5.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.TelemetryCorrelation, Version=1.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.TelemetryCorrelation.1.0.5\lib\net45\Microsoft.AspNet.TelemetryCorrelation.dll</HintPath>
@@ -189,13 +204,18 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\CustomersController.cs" />
     <Compile Include="Controllers\Api\BooksController.cs" />
+    <Compile Include="Controllers\Api\NewRentalsController.cs" />
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\RentalsController.cs" />
     <Compile Include="Dtos\CustomerDto.cs" />
     <Compile Include="Dtos\BookDto.cs" />
+    <Compile Include="Dtos\BookGenreDto.cs" />
     <Compile Include="Dtos\MembershipTypeDto.cs" />
+    <Compile Include="Dtos\NewRentalDto.cs" />
+    <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -255,6 +275,34 @@
     <Compile Include="Migrations\201908301523513_AdaugareColoanaGenreIdNew.Designer.cs">
       <DependentUpon>201908301523513_AdaugareColoanaGenreIdNew.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909031351320_ChangeIntToByte.cs" />
+    <Compile Include="Migrations\201909031351320_ChangeIntToByte.Designer.cs">
+      <DependentUpon>201909031351320_ChangeIntToByte.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909031902388_SeedUsers.cs" />
+    <Compile Include="Migrations\201909031902388_SeedUsers.Designer.cs">
+      <DependentUpon>201909031902388_SeedUsers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909040839471_AddDrivingLicenseToAppUser.cs" />
+    <Compile Include="Migrations\201909040839471_AddDrivingLicenseToAppUser.Designer.cs">
+      <DependentUpon>201909040839471_AddDrivingLicenseToAppUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909041008078_AddPhoneToAppUser.cs" />
+    <Compile Include="Migrations\201909041008078_AddPhoneToAppUser.Designer.cs">
+      <DependentUpon>201909041008078_AddPhoneToAppUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909041357096_RentalsTabel.cs" />
+    <Compile Include="Migrations\201909041357096_RentalsTabel.Designer.cs">
+      <DependentUpon>201909041357096_RentalsTabel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909041447175_cls.cs" />
+    <Compile Include="Migrations\201909041447175_cls.Designer.cs">
+      <DependentUpon>201909041447175_cls.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909041448288_NumberAvBooks.cs" />
+    <Compile Include="Migrations\201909041448288_NumberAvBooks.Designer.cs">
+      <DependentUpon>201909041448288_NumberAvBooks.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Book.cs" />
@@ -264,6 +312,8 @@
     <Compile Include="Models\MembershipType.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Min18YearsIfAMember.cs" />
+    <Compile Include="Models\Rental.cs" />
+    <Compile Include="Models\RoleName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\BookFormViewModel.cs" />
@@ -271,6 +321,7 @@
     <Compile Include="ViewModels\RandomBooksViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="404.html" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-lumen.css" />
@@ -436,9 +487,14 @@
     <Content Include="Content\DataTables\images\sort_desc.png" />
     <Content Include="Content\DataTables\images\sort_desc_disabled.png" />
     <Content Include="Content\DataTables\swf\flashExport.swf" />
+    <Content Include="Content\toastr.css" />
+    <Content Include="Content\toastr.min.css" />
+    <Content Include="Content\typeahead.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\bloodhound.js" />
+    <Content Include="Scripts\bloodhound.min.js" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -542,6 +598,10 @@
     <Content Include="Content\DataTables\css\semanticui.scss" />
     <Content Include="Content\DataTables\css\mixins.scss" />
     <Content Include="Content\DataTables\css\common.scss" />
+    <Content Include="Content\toastr.scss" />
+    <Content Include="Content\toastr.less" />
+    <Content Include="AppSettings.config" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -564,6 +624,13 @@
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\toastr.js" />
+    <Content Include="Scripts\toastr.min.js" />
+    <Content Include="Scripts\typeahead.bundle.js" />
+    <Content Include="Scripts\typeahead.bundle.min.js" />
+    <Content Include="Scripts\typeahead.jquery.js" />
+    <Content Include="Scripts\typeahead.jquery.min.js" />
+    <Content Include="Scripts\typeahead1.js" />
     <Content Include="Scripts\umd\popper-utils.js" />
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
@@ -621,6 +688,8 @@
     <Content Include="Views\Books\Details.cshtml" />
     <Content Include="Views\Customers\CustomerForm.cshtml" />
     <Content Include="Views\Books\BookForm.cshtml" />
+    <Content Include="Views\Books\ReadOnlyList.cshtml" />
+    <Content Include="Views\Rentals\New.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -679,6 +748,27 @@
     <EmbeddedResource Include="Migrations\201908301523513_AdaugareColoanaGenreIdNew.resx">
       <DependentUpon>201908301523513_AdaugareColoanaGenreIdNew.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909031351320_ChangeIntToByte.resx">
+      <DependentUpon>201909031351320_ChangeIntToByte.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909031902388_SeedUsers.resx">
+      <DependentUpon>201909031902388_SeedUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909040839471_AddDrivingLicenseToAppUser.resx">
+      <DependentUpon>201909040839471_AddDrivingLicenseToAppUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909041008078_AddPhoneToAppUser.resx">
+      <DependentUpon>201909041008078_AddPhoneToAppUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909041357096_RentalsTabel.resx">
+      <DependentUpon>201909041357096_RentalsTabel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909041447175_cls.resx">
+      <DependentUpon>201909041447175_cls.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909041448288_NumberAvBooks.resx">
+      <DependentUpon>201909041448288_NumberAvBooks.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -699,7 +789,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49554</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:49554/</IISUrl>
+          <IISUrl>https://localhost:44343/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

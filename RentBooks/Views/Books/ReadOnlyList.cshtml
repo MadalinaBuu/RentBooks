@@ -1,0 +1,42 @@
+﻿@model IEnumerable<RentBooks.Models.Book>
+
+@{
+    ViewBag.Title = "Books";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Books</h2>
+
+
+<table id="books" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Books</th>
+            <th>Genre</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            var table = $("#books").DataTable({
+                ajax: {
+                    url: "/api/books",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "name"
+                    },
+                    {
+                        data: "genre.name"
+                    }
+                ]
+            });
+        });
+    </script>
+}

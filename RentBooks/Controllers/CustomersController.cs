@@ -21,6 +21,10 @@ namespace RentBooks.Controllers
         {
             _context.Dispose();
         }
+        public ViewResult Index()
+        {
+            return View();
+        }
         public ActionResult CustomerForm()
         {
             var membershipTypes = _context.MembershipTypes.ToList();
@@ -59,11 +63,6 @@ namespace RentBooks.Controllers
             _context.SaveChanges();
 
             return RedirectToAction("Index", "Customers");
-        }
-
-        public ViewResult Index()
-        {
-            return View();
         }
 
         public ActionResult Details(int id)

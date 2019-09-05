@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Data.Entity;
 
 namespace RentBooks.Controllers.Api
 {
@@ -19,9 +20,23 @@ namespace RentBooks.Controllers.Api
             _context = new ApplicationDbContext();
         }
         //GET /api/books
-        public IEnumerable<BookDto> GetBooks()
+        //public IEnumerable<BookDto> GetBooks(string query = null)
+        //{
+        //    var booksQuery = _context.Books
+        //        .Include(m => m.Genre)
+        //        .Where(m => m.NumberAvailable > 0);
+
+        //    if (!String.IsNullOrWhiteSpace(query))
+        //        booksQuery = booksQuery.Where(m => m.Name.Contains(query));
+
+        //    return booksQuery
+        //        .ToList()
+        //        .Select(Mapper.Map<Book, BookDto>);
+        //}
+        public IEnumerable<BookDto> GetBooks(string query = "")
         {
-            return _context.Books.ToList().Select(Mapper.Map<Book, BookDto>);
+            var booksQuery = _context.Books.Include(m => m.Genre);
+            return booksQuery.Where(m => m.Name.Contains(query)).ToList().Select(Mapper.Map<Book, BookDto>);
         }
         //GET /api/book/1
         public IHttpActionResult GetBook(int id)
@@ -31,16 +46,16 @@ namespace RentBooks.Controllers.Api
             if (book == null)
                 return NotFound();
 
-            return Ok(Mapper.Map<Book, BookDto>(book));
+            return Ok(Mapper.Map<Book, BookGenreDto>(book));
         }
         //POST /api/books
         [HttpPost]
-        public IHttpActionResult CreateBook(BookDto bookDto)
+        public IHttpActionResult CreateBook(BookGenreDto bookDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var book = Mapper.Map<BookDto, Book>(bookDto);
+            var book = Mapper.Map<BookGenreDto, Book>(bookDto);
             _context.Books.Add(book);
             _context.SaveChanges();
 
@@ -50,7 +65,7 @@ namespace RentBooks.Controllers.Api
         }
         //PUT /api/books/1
         [HttpPut]
-        public IHttpActionResult UpdateBook(int id, BookDto bookDto)
+        public IHttpActionResult UpdateBook(int id, BookGenreDto bookDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest();

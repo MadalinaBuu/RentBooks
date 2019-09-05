@@ -20,7 +20,7 @@ namespace RentBooks
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.Email;
+            AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.Name;
         }
     }
 }
