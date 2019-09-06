@@ -105,14 +105,11 @@ namespace RentBooks.Controllers
             {
                 var bookInDb = _context.Books.Single(c => c.Id == book.Id);
 
-                //Mapper.Map(customer, customerInDb);
-                //it should be used with a partial class of Customer
-
                 bookInDb.Name = book.Name;
                 if (book.ReleaseDate == DateTime.MinValue) book.ReleaseDate = DateTime.Now;
                 if (book.DateAdded == DateTime.MinValue) bookInDb.DateAdded = DateTime.Now;
                 bookInDb.GenreId = book.GenreId;
-                bookInDb.NumberInStock = book.NumberInStock;
+                bookInDb.NumberInStock = bookInDb.NumberAvailable = book.NumberInStock;
             }
             _context.SaveChanges();
 

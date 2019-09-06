@@ -15,7 +15,8 @@ namespace RentBooks
                         "~/Scripts/datatables/jquery.datatables.js",
                         "~/Scripts/datatables/datatables.bootstrap4.js",
                         "~/Scripts/typeahead.bundle.js",
-                        "~/Scripts/toastr.js"));
+                        "~/Scripts/toastr.js",
+                        "~/Scripts/bootstrap-datepicker.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -30,6 +31,7 @@ namespace RentBooks
                       "~/Content/datatables/css/datatables.bootstrap4.css",
                       "~/Content/typeahead.css",
                       "~/Content/toastr.css",
+                      "~/Content/bootstrap-datepicker.css",
                       "~/Content/site.css"));
         }
     }

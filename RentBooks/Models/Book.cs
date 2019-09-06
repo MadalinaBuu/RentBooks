@@ -1,10 +1,12 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RentBooks.Models
 {
     public class Book
     {
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public byte Id { get; set; }
 
         [Required]

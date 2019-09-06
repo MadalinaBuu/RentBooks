@@ -307,6 +307,10 @@
     <Compile Include="Migrations\201909051802557_AddAuthorToBooks.Designer.cs">
       <DependentUpon>201909051802557_AddAuthorToBooks.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909061801253_AddPropToIdInBook.cs" />
+    <Compile Include="Migrations\201909061801253_AddPropToIdInBook.Designer.cs">
+      <DependentUpon>201909061801253_AddPropToIdInBook.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Book.cs" />
@@ -326,6 +330,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="404.html" />
+    <Content Include="Content\bootstrap-datepicker.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-lumen.css" />
@@ -501,6 +506,7 @@
     <Content Include="Scripts\bloodhound.min.js" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
+    <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -775,6 +781,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909051802557_AddAuthorToBooks.resx">
       <DependentUpon>201909051802557_AddAuthorToBooks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909061801253_AddPropToIdInBook.resx">
+      <DependentUpon>201909061801253_AddPropToIdInBook.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

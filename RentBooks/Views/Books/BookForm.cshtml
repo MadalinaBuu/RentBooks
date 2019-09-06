@@ -1,5 +1,7 @@
 ﻿@model RentBooks.ViewModels.BookFormViewModel
 @{
+    /**/
+
     ViewBag.Title = "BookForm";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -21,8 +23,13 @@ else
         @Html.ValidationMessageFor(m => m.Name)
     </div>
     <div class="form-group">
+        @Html.LabelFor(m => m.Author)
+        @Html.TextBoxFor(m => m.Author, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Author)
+    </div>
+    <div class="form-group">
         @Html.LabelFor(m => m.ReleaseDate)
-        @Html.TextBoxFor(m => m.ReleaseDate, "{0:d MMM yyyy}", new { @Value = @DateTime.MinValue.ToString("d MMM yyyy"), @class = "form-control" })
+        @Html.TextBoxFor(m => m.ReleaseDate, new { @Value = "01/01/2000", @class = "form-control datepicker" })
         @Html.ValidationMessageFor(m => m.ReleaseDate)
     </div>
     <div class="form-group">
@@ -43,4 +50,11 @@ else
 @section scripts
 {
     @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $('.datepicker').datepicker({
+            weekStart: 1,
+            color: 'red',
+            format: 'dd/mm/yyyy'
+        });
+    </script>
 }
