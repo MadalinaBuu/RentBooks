@@ -15,10 +15,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Customers</h2>
-
-@Html.ActionLink("Create New", "CustomerForm", "Customers", new { @class = "btn btn-primary" })
-
+<div class="display-flex-sb padding-top-bottom-1">
+    <h2>Customers</h2>
+    <div>@Html.ActionLink("Create New", "CustomerForm", "Customers", new { @class = "btn btn-primary" })</div>
+</div>
 
 <table id="customers" class="table table-bordered table-hover">
     <thead>
