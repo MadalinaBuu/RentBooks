@@ -86,6 +86,9 @@
                 return vm.booksIds.length > 0;
             }, "Please select at least one book.");
 
+            //$.validator.addMethod("fiveBooksMax", function () {
+            //    return vm.booksIds.length > 5;
+            //}, "You can rent only 5 books.");
 
             var validator = $("#newRental").validate({
                 submitHandler: function () {
@@ -104,6 +107,8 @@
                         vm = { movieIds: [] };
 
                         validator.resetForm();
+
+                        window.location.href = "/Home/Index";
                     })
                     .fail(function () {
                         toastr.error("Something unexpected happened.");

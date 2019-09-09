@@ -4,9 +4,10 @@
     ViewBag.Title = "Books";
 }
 
-<h2>Books</h2>
-
-@Html.ActionLink("Create New", "BookForm", "Books", new { @class = "btn btn-primary" })
+    <div class="display-flex-sb padding-top-bottom-1">
+        <h2>Books</h2>
+        <div>@Html.ActionLink("Create New", "BookForm", "Books", new { @class = "btn btn-primary" })</div>
+    </div>
 
 <table id="books" class="table table-bordered table-hover">
     <thead>
