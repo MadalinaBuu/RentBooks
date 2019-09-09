@@ -20,7 +20,7 @@ namespace RentBooks.Controllers
         
         public ActionResult Index()
         {
-            var books = _context.Rentals.Include(c => c.Customer).Include(b => b.Book);
+            var books = _context.Rentals.Include(c => c.Customer).Include(b => b.Book).OrderBy(m => m.DateRented);
 
             return View(books);
         }
