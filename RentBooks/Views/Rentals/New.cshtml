@@ -74,6 +74,7 @@
                     source: books
                 }).on("typeahead:select", function (e, book) {
                     $("#books").append("<li class='list-group-item'>" + book.name + "</li>");
+
                     $("#book").typeahead("val", "");
                     vm.booksIds.push(book.id);
                 });
@@ -85,10 +86,6 @@
             $.validator.addMethod("atLeastOneBook", function () {
                 return vm.booksIds.length > 0;
             }, "Please select at least one book.");
-
-            //$.validator.addMethod("fiveBooksMax", function () {
-            //    return vm.booksIds.length > 5;
-            //}, "You can rent only 5 books.");
 
             var validator = $("#newRental").validate({
                 submitHandler: function () {
@@ -104,14 +101,17 @@
                         $("#book").typeahead("val", "");
                         $("#books").empty();
 
-                        vm = { movieIds: [] };
+                        vm = { bookIds: [] };
 
                         validator.resetForm();
 
                         //window.location.href = "/Home/Index";
                     })
-                    .fail(function () {
-                        toastr.error("Something unexpected happened.");
+                        .fail(function (xhr) {
+                        var errorMessage = "Something unexpected happened. ";
+                        if (xhr.responseJSON.message !== "")
+                            errorMessage += xhr.responseJSON.message;
+                        toastr.error(errorMessage);
                      });
                     return false;
                 }

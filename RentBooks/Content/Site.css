@@ -26,6 +26,9 @@ textarea {
 .padding-right-5 {
     padding-right: 5px;
 }
+.padding-left-10 {
+    padding-left: 10px;
+}
 
 .display-flex-sb {
     display: flex;

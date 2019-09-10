@@ -32,10 +32,19 @@ namespace RentBooks.Controllers.Api
             //if (books.Count() != newRental.BooksIds.Count)
             //    return BadRequest("One or more BookIds are invalid.");
 
+            var oldRentals = _context.Rentals.Where(c => c.CustomerId == newRental.CustomerId).ToList();
+            var bookRentedAlready = oldRentals.Where(m => newRental.BooksIds.Contains(m.BookId)).ToList();
+
             foreach (var book in books)
             {
                 if (book.NumberAvailable == 0)
-                    return BadRequest("Movie is not available.");
+                    return BadRequest("Book is not available.");
+
+                if (books.Count() > 5)
+                    return BadRequest("You can't rent more than 5 books.");
+
+                if (bookRentedAlready.Count() > 0)
+                    return BadRequest("You have rented this book already.");
 
                 book.NumberAvailable--;
                 var rental = new Rental
